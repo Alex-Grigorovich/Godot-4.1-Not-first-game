@@ -1,0 +1,31 @@
+[gd_scene load_steps=3 format=3 uid="uid://njv586qn3svc"]
+
+[ext_resource type="Script" path="res://Scripts/menu.gd" id="1_6us6o"]
+[ext_resource type="AudioStream" uid="uid://dunltsooubc52" path="res://Sounds/The-xx-Intro.wav" id="2_m6s27"]
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_6us6o")
+
+[node name="Play" type="Button" parent="."]
+offset_left = 458.0
+offset_top = 204.0
+offset_right = 668.0
+offset_bottom = 326.0
+theme_override_font_sizes/font_size = 50
+text = "Play"
+
+[node name="Quit" type="Button" parent="."]
+offset_left = 463.0
+offset_top = 363.0
+offset_right = 673.0
+offset_bottom = 485.0
+theme_override_font_sizes/font_size = 50
+text = "Quit
+"
+
+[node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
+stream = ExtResource("2_m6s27")
+autoplay = true
+
+[connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
+[connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
