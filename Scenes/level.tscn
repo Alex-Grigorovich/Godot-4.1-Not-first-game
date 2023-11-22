@@ -1,8 +1,8 @@
-[gd_scene format=3 uid="uid://dq1jguneam3qi"]
+[gd_scene load_steps=2 format=3 uid="uid://dq1jguneam3qi"]
+
+[ext_resource type="PackedScene" uid="uid://d0r4irptm4exc" path="res://Player/player.tscn" id="1_cqt1b"]
 
 [node name="Level" type="Node2D"]
 
-[node name="Label" type="Label" parent="."]
-offset_right = 40.0
-offset_bottom = 23.0
-text = "Level 1 clear"
+[node name="Player" parent="." instance=ExtResource("1_cqt1b")]
+position = Vector2(538, 303)
