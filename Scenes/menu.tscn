@@ -1,24 +1,33 @@
-[gd_scene load_steps=3 format=3 uid="uid://njv586qn3svc"]
+[gd_scene load_steps=4 format=3 uid="uid://njv586qn3svc"]
 
 [ext_resource type="Script" path="res://Scripts/menu.gd" id="1_6us6o"]
 [ext_resource type="AudioStream" uid="uid://dunltsooubc52" path="res://Sounds/The-xx-Intro.wav" id="2_m6s27"]
+[ext_resource type="PackedScene" uid="uid://bsigh6jp11js1" path="res://Scenes/bg.tscn" id="3_oghl1"]
 
 [node name="Menu" type="Node2D"]
 script = ExtResource("1_6us6o")
 
+[node name="Label" type="Label" parent="."]
+offset_left = 340.0
+offset_top = 87.0
+offset_right = 806.0
+offset_bottom = 173.0
+theme_override_font_sizes/font_size = 60
+text = "(Not) First game"
+
 [node name="Play" type="Button" parent="."]
 offset_left = 458.0
-offset_top = 204.0
+offset_top = 256.0
 offset_right = 668.0
-offset_bottom = 326.0
+offset_bottom = 378.0
 theme_override_font_sizes/font_size = 50
 text = "Play"
 
 [node name="Quit" type="Button" parent="."]
 offset_left = 463.0
-offset_top = 363.0
+offset_top = 415.0
 offset_right = 673.0
-offset_bottom = 485.0
+offset_bottom = 537.0
 theme_override_font_sizes/font_size = 50
 text = "Quit
 "
@@ -26,6 +35,8 @@ text = "Quit
 [node name="BackgroundMusic" type="AudioStreamPlayer2D" parent="."]
 stream = ExtResource("2_m6s27")
 autoplay = true
+
+[node name="BG" parent="." instance=ExtResource("3_oghl1")]
 
 [connection signal="pressed" from="Play" to="." method="_on_play_pressed"]
 [connection signal="pressed" from="Quit" to="." method="_on_quit_pressed"]
