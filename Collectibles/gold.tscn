@@ -1,0 +1,58 @@
+[gd_scene load_steps=11 format=3 uid="uid://dasw3547omuvv"]
+
+[ext_resource type="Texture2D" uid="uid://eeh6iuox26qg" path="res://Assets/Coin/Coin-1.png.png" id="1_3ks2c"]
+[ext_resource type="Script" path="res://Scripts/gold.gd" id="1_60xc0"]
+[ext_resource type="Texture2D" uid="uid://bjxnthj5ee0vi" path="res://Assets/Coin/Coin-2.png.png" id="2_lvnrn"]
+[ext_resource type="Texture2D" uid="uid://s51yd7gwvo7a" path="res://Assets/Coin/Coin-3.png.png" id="3_bso67"]
+[ext_resource type="Texture2D" uid="uid://bypr3icf4q25s" path="res://Assets/Coin/Coin-4.png.png" id="4_prkvf"]
+[ext_resource type="Texture2D" uid="uid://c55uf6hdpgbto" path="res://Assets/Coin/Coin-5.png.png" id="5_8dbo3"]
+[ext_resource type="Texture2D" uid="uid://cm5ncb7n43qvf" path="res://Assets/Coin/Coin-6.png.png" id="6_dpsxg"]
+[ext_resource type="Texture2D" uid="uid://dqofyh63pxk08" path="res://Assets/Coin/Coin-7.png.png" id="7_1bxy2"]
+
+[sub_resource type="CircleShape2D" id="CircleShape2D_bhgo2"]
+radius = 4.0
+
+[sub_resource type="SpriteFrames" id="SpriteFrames_c5pse"]
+animations = [{
+"frames": [{
+"duration": 1.0,
+"texture": ExtResource("1_3ks2c")
+}, {
+"duration": 1.0,
+"texture": ExtResource("2_lvnrn")
+}, {
+"duration": 1.0,
+"texture": ExtResource("3_bso67")
+}, {
+"duration": 1.0,
+"texture": ExtResource("4_prkvf")
+}, {
+"duration": 1.0,
+"texture": ExtResource("5_8dbo3")
+}, {
+"duration": 1.0,
+"texture": ExtResource("6_dpsxg")
+}, {
+"duration": 1.0,
+"texture": ExtResource("7_1bxy2")
+}],
+"loop": true,
+"name": &"Idle",
+"speed": 10.0
+}]
+
+[node name="Gold" type="Area2D"]
+script = ExtResource("1_60xc0")
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+shape = SubResource("CircleShape2D_bhgo2")
+
+[node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
+scale = Vector2(0.0125, 0.0125)
+sprite_frames = SubResource("SpriteFrames_c5pse")
+animation = &"Idle"
+autoplay = "Idle"
+
+[node name="Timer" type="Timer" parent="."]
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
