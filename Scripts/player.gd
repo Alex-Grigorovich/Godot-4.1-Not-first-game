@@ -15,12 +15,12 @@ func _physics_process(delta):
 
 
 
-	if Input.is_action_just_pressed("ui_accept") and is_on_floor():
+	if Input.is_action_just_pressed("attack") and is_on_floor():
 		velocity.y = JUMP_VELOCITY
 		anim.play("Jump")
 
 
-	var direction = Input.get_axis("ui_left", "ui_right")
+	var direction = Input.get_axis("left", "right")
 	if direction:
 		velocity.x = direction * SPEED
 		if velocity.y == 0:
