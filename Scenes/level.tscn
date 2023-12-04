@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=3 uid="uid://dq1jguneam3qi"]
+[gd_scene load_steps=19 format=3 uid="uid://dq1jguneam3qi"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_80ga6"]
 [ext_resource type="PackedScene" uid="uid://d0r4irptm4exc" path="res://Player/player.tscn" id="1_cqt1b"]
@@ -1268,6 +1268,58 @@ func _process(_delta):
 	text = \"GOLD: \" + str($\"../../Player/Player\".gold)
 "
 
+[sub_resource type="Animation" id="Animation_o7fw5"]
+resource_name = "day_text_fade_in"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DayText:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0), Color(1, 1, 1, 0.941176)]
+}
+
+[sub_resource type="Animation" id="Animation_81wgb"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DayText:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_hth5s"]
+resource_name = "day_text_fade_out"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DayText:modulate")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Color(1, 1, 1, 0.941176), Color(1, 1, 1, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_vhva7"]
+_data = {
+"RESET": SubResource("Animation_81wgb"),
+"day_text_fade_in": SubResource("Animation_o7fw5"),
+"day_text_fade_out": SubResource("Animation_hth5s")
+}
+
 [sub_resource type="GDScript" id="GDScript_yrly4"]
 script/source = "extends Node2D
 
@@ -1353,6 +1405,19 @@ offset_bottom = 80.0
 theme_override_font_sizes/font_size = 30
 text = "GOLD"
 script = SubResource("GDScript_fl8ri")
+
+[node name="DayText" type="Label" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0)
+offset_left = 439.0
+offset_right = 776.0
+offset_bottom = 113.0
+theme_override_font_sizes/font_size = 80
+text = "DAY"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
+libraries = {
+"": SubResource("AnimationLibrary_vhva7")
+}
 
 [node name="Collectibles" type="Node2D" parent="."]
 script = SubResource("GDScript_yrly4")
