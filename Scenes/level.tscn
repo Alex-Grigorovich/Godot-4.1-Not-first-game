@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=3 uid="uid://dq1jguneam3qi"]
+[gd_scene load_steps=23 format=3 uid="uid://dq1jguneam3qi"]
 
 [ext_resource type="Script" path="res://Scripts/level.gd" id="1_80ga6"]
 [ext_resource type="PackedScene" uid="uid://d0r4irptm4exc" path="res://Player/player.tscn" id="1_cqt1b"]
@@ -7,7 +7,10 @@
 [ext_resource type="Texture2D" uid="uid://cbkngjtng15bn" path="res://Assets/oak_woods_v1.0/background/background_layer_3.png" id="3_p1nnt"]
 [ext_resource type="Texture2D" uid="uid://civkgqbqaoj2p" path="res://Assets/oak_woods_v1.0/oak_woods_tileset.png" id="4_puqgr"]
 [ext_resource type="PackedScene" uid="uid://cno2sglv0r1nh" path="res://Buid/shop.tscn" id="6_2bd5k"]
+[ext_resource type="Texture2D" uid="uid://c06ihnkdybnjx" path="res://Assets/Progress Bar/Sprite-0003.png" id="7_h0wjx"]
+[ext_resource type="Texture2D" uid="uid://c7wvyueshg76q" path="res://Assets/Progress Bar/Sprite-0001.png" id="8_njqse"]
 [ext_resource type="Texture2D" uid="uid://jarv8qkuycns" path="res://Assets/oak_woods_v1.0/decorations/circle.png" id="8_w8y6e"]
+[ext_resource type="Texture2D" uid="uid://djn7qv0ddkxh7" path="res://Assets/Progress Bar/Sprite-0002.png" id="9_1gmrq"]
 [ext_resource type="PackedScene" uid="uid://dyq6v2m1qk5js" path="res://Enemies/mushroom.tscn" id="9_ktpjy"]
 
 [sub_resource type="TileSetAtlasSource" id="TileSetAtlasSource_qekpc"]
@@ -1384,6 +1387,7 @@ layer_0/tile_data = PackedInt32Array(2490368, 65536, 1, 2490369, 131072, 1, 2490
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 
 [node name="Label" type="Label" parent="CanvasLayer"]
+visible = false
 offset_left = 28.0
 offset_top = 15.0
 offset_right = 131.0
@@ -1393,6 +1397,7 @@ text = "HP "
 script = SubResource("GDScript_cioti")
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
+visible = false
 offset_left = 31.0
 offset_top = 57.0
 offset_right = 71.0
@@ -1408,6 +1413,20 @@ offset_right = 776.0
 offset_bottom = 113.0
 theme_override_font_sizes/font_size = 80
 text = "DAY"
+
+[node name="HealthBar" type="TextureProgressBar" parent="CanvasLayer"]
+modulate = Color(1, 1, 1, 0.756863)
+offset_left = 27.0
+offset_top = 19.0
+offset_right = 173.0
+offset_bottom = 58.0
+value = 50.0
+nine_patch_stretch = true
+texture_under = ExtResource("7_h0wjx")
+texture_over = ExtResource("8_njqse")
+texture_progress = ExtResource("9_1gmrq")
+tint_over = Color(0.662745, 0.662745, 0.662745, 1)
+tint_progress = Color(0.886275, 0, 0.141176, 1)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="CanvasLayer"]
 libraries = {
@@ -1465,3 +1484,4 @@ position = Vector2(155, 557)
 position = Vector2(221, 569)
 
 [connection signal="timeout" from="Light/DayNight" to="." method="_on_day_night_timeout"]
+[connection signal="health_changed" from="Player/Player" to="." method="_on_player_health_changed"]

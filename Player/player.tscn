@@ -1,10 +1,11 @@
-[gd_scene load_steps=102 format=3 uid="uid://d0r4irptm4exc"]
+[gd_scene load_steps=103 format=3 uid="uid://d0r4irptm4exc"]
 
 [ext_resource type="Texture2D" uid="uid://ccdhrkiqjokwj" path="res://Assets/oak_woods_v1.0/character/char_blue.png" id="1_fwoiu"]
 [ext_resource type="Script" path="res://Scripts/player.gd" id="1_hh2ga"]
 [ext_resource type="Texture2D" uid="uid://dh6gn0psj6hr1" path="res://Assets/generic_char_v0.2/png/blue/char_blue_1.png" id="2_2clrd"]
 [ext_resource type="Texture2D" uid="uid://bu8846xvc0su2" path="res://Assets/generic_char_v0.2/png/blue/char_blue_2.png" id="3_ysebr"]
 [ext_resource type="Texture2D" uid="uid://jarv8qkuycns" path="res://Assets/oak_woods_v1.0/decorations/circle.png" id="5_cv4qk"]
+[ext_resource type="PackedScene" uid="uid://4khwfyunoku0" path="res://Scenes/damage_box.tscn" id="6_clx0r"]
 
 [sub_resource type="CapsuleShape2D" id="CapsuleShape2D_6u64x"]
 
@@ -1009,14 +1010,16 @@ collision_layer = 2
 script = ExtResource("1_hh2ga")
 
 [node name="CollisionShape2D" type="CollisionShape2D" parent="."]
+visible = false
 shape = SubResource("CapsuleShape2D_6u64x")
 
 [node name="AnimatedSprite2D" type="AnimatedSprite2D" parent="."]
 position = Vector2(1, -13)
 sprite_frames = SubResource("SpriteFrames_vca7f")
-animation = &"Attack2"
+animation = &"Death"
 autoplay = "Idle"
-frame = 2
+frame = 11
+frame_progress = 1.0
 
 [node name="Camera2D" type="Camera2D" parent="."]
 zoom = Vector2(2.4, 2.4)
@@ -1040,3 +1043,23 @@ texture = ExtResource("5_cv4qk")
 [node name="LightOccluder2D" type="LightOccluder2D" parent="."]
 scale = Vector2(0.0575, 0.0575)
 occluder = SubResource("OccluderPolygon2D_fa1xy")
+
+[node name="AttackDirection" type="Node2D" parent="."]
+
+[node name="DamageBox" parent="AttackDirection" instance=ExtResource("6_clx0r")]
+
+[node name="HurtBox" parent="AttackDirection/DamageBox" index="0"]
+collision_layer = 16
+collision_mask = 0
+
+[node name="CollisionShape2D" parent="AttackDirection/DamageBox/HurtBox" index="0"]
+position = Vector2(1, 0)
+
+[node name="HitBox" parent="AttackDirection/DamageBox" index="1"]
+collision_layer = 0
+collision_mask = 32
+
+[node name="CollisionShape2D" parent="AttackDirection/DamageBox/HitBox" index="0"]
+position = Vector2(-4, 0)
+
+[editable path="AttackDirection/DamageBox"]
