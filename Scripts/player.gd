@@ -29,12 +29,20 @@ var run_speed = 1
 var combo = false
 var attack_cooldown = false
 var player_pos
+var damage_basic = 10
+var damage_multiplier = 1
+var damage_current
 
 func _ready():
 	Signals.connect("enemy_attack", Callable (self, "_on_damage_received"))
 	health = max_health
 
 func _physics_process(delta):
+	
+	if not is_on_floor():
+		velocity.y += gravity * delta
+		
+	damage_current = damage_basic * damage_multiplier
 	
 	match state:
 		MOVE:
@@ -54,8 +62,7 @@ func _physics_process(delta):
 		DEATH:	
 			death_state()
 		
-	if not is_on_floor():
-		velocity.y += gravity * delta
+	
 
 #	if Input.is_action_just_pressed("attack") and is_on_floor():
 #		velocity.y = JUMP_VELOCITY
@@ -86,8 +93,10 @@ func move_state():
 			
 	if direction == -1:
 		anim.flip_h = true
+		$AttackDirection.rotation_degrees = 180
 	elif direction == 1:
 		anim.flip_h = false
+		$AttackDirection.rotation_degrees = 0
 		
 	if Input.is_action_pressed("run"):
 		run_speed = 2
@@ -115,6 +124,8 @@ func slide_state():
 	state = MOVE
 
 func attack_state():
+	damage_multiplier = 1
+	
 	if Input.is_action_just_pressed("attack") and combo == true:
 		state = ATTACK2
 	velocity.x = 0
@@ -124,6 +135,7 @@ func attack_state():
 	state = MOVE
 	
 func attack2_state():
+	damage_multiplier = 1.2
 	if Input.is_action_just_pressed("attack") and combo == true:
 		state = ATTACK3
 	animPlayer.play("Attack2")
@@ -131,6 +143,7 @@ func attack2_state():
 	state = MOVE
 		
 func attack3_state():
+	damage_multiplier = 2
 	animPlayer.play("Attack3")
 	await animPlayer.animation_finished
 	state = MOVE	
@@ -159,6 +172,12 @@ func death_state():
 	get_tree().change_scene_to_file("res://Scenes/menu.tscn")
 
 func _on_damage_received (enemy_damage):
+	if state == BLOCK:
+		enemy_damage /= 2
+	elif state == SLIDE:
+		enemy_damage = 0
+	else:
+		state == DAMAGE
 	health -= enemy_damage
 	if health <= 0:
 		health = 0
@@ -171,3 +190,7 @@ func _on_damage_received (enemy_damage):
 	
 	
 	
+
+
+func _on_hit_box_area_entered(area):
+	Signals.emit_signal("player_attack", damage_current)
