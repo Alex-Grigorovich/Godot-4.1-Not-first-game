@@ -1443,8 +1443,9 @@ autostart = true
 [node name="Light" type="Node2D" parent="."]
 
 [node name="DirectionalLight2D" type="DirectionalLight2D" parent="Light"]
+visible = false
 enabled = false
-energy = 0.95
+energy = 0.94
 blend_mode = 1
 range_layer_min = -1
 

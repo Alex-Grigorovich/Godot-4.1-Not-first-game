@@ -31,11 +31,11 @@ var gravity = ProjectSettings.get_setting("physics/2d/default_gravity")
 var player
 var direction
 var damage = 20
-var health = 100
+
 
 func _ready():
 	Signals.connect("player_position_update", Callable(self, "_on_player_position_update"))
-	Signals.connect("player_attack", Callable(self, "_on_damage_received"))
+	
 
 func _physics_process(delta):
 	if not is_on_floor():
@@ -76,14 +76,7 @@ func chase_state():
 func _on_hit_box_area_entered(area):
 	Signals.emit_signal("enemy_attack", damage)
 	
-func _on_damage_received (player_damage):
-	health -= player_damage
-	print(player_damage)
-	if health <= 0:
-		state = DEATH
-	else:
-		state = IDLE
-		state = DAMAGE
+
 
 func damage_state():
 	animPlayer.play("Damage")
@@ -99,3 +92,12 @@ func recover_state():
 	animPlayer.play("Recover")
 	await animPlayer.animation_finished
 	state = IDLE
+
+
+func _on_mob_health_no_health():
+	state = DEATH
+	
+
+func _on_mob_health_damage_received():
+	state = IDLE
+	state = DAMAGE
